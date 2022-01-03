@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" action="{% url 'tasks:task_list' %}" class="pb-4">
+    {% csrf_token %}
+    <div class="form-floating pb-3">
+        <input class="form-control" type="text" placeholder="Task" name="text_input" id="task-input">
+        <label for="task-input">Task</label>
+    </div>
+    <div class="form-floating pb-4 w-25" style="min-width: 2em;">
+        <input type="date" class="form-control" aria-describedby="due_date" name="due_date" id="due-date">
+        <label for="due-date">Due Date</label>
+    </div>
+    <button class="btn btn-outline-secondary" type="submit">Submit</button>
+    <button class="btn btn-outline-secondary" type="reset">Reset</button>
+</form>
+{% for task in task_list %}
+{% if task.is_complete %}
+<div class="list-group-item container-fluid list-group pb-2">
+    <span class="text-success"><em>Complete!</em></span><br>
+    <span class="text-info">Task: </span> <span class="text-decoration-line-through">{{task.task}}</span><br>
+    {% if task.due_date %}
+    <span class="text-info">Due Date: </span> <span>{{task.due_date}}</span><br>
+    {% endif %}
+    <span><a href="{% url 'tasks:task_update_status' task.pk %}" class="text-info"><em>Change To Incomplete</em></a></span>
+    <span><a href="{% url 'tasks:task_delete' task.pk %}" class="text-danger"><em>Delete</em></a></span>
+    <span><a href="{% url 'tasks:task_edit' task.pk %}" class="text-info"><em>Edit</em></a></span>
+    
+</div>
+{% else %}
+<div class="list-group-item container-fluid list-group pb-2">
+    <div class="d-flex flex-row">
+        <span class="text-info pe-1">Task:</span>
+        <span>{{task.task}}</span><br>
+    </div>
+    {% if task.due_date %}
+    <span class="text-info">Due Date: </span> <span>{{task.due_date}}</span><br>
+    {% endif %}
+    <span><a href="{% url 'tasks:task_update_status' task.pk %}" class="text-info"><em>Change To Complete</em></a></span>
+    <span><a href="{% url 'tasks:task_delete' task.pk %}" class="text-danger"><em>Delete</em></a></span>
+    <span><a href="{% url 'tasks:task_edit' task.pk %}" class="text-info"><em>Edit</em></a></span>
+</div>
+{% endif %}
+    {% endfor %}
+{% endblock %}

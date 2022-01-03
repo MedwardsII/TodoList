@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="POST" action="{% url 'tasks:task_edit' task_data.pk %}" class="pb-4">
+    {% csrf_token %}
+    <div class="form-floating pb-3">
+        <input class="form-control" type="text" placeholder="Task" name="text_input" value="{{task_data.text_input}}" id="task-input">
+        <label for="task-input">Task</label>
+    </div>
+    <div class="form-floating pb-4 w-25">
+        <input type="date" class="form-control" aria-describedby="due_date" name="due_date" id="due-date" value="{{task_data.due_date|date:'Y-m-d'}}">
+        <label for="due-date">Due Date</label>
+    </div>
+    <div class="form-check pb-4 w-25">
+        <label class="form-check-label" for="is-complete">Is Complete</label>
+        {% if task_data.is_complete %}
+        <input type="checkbox" class="form-check-input" name="is_complete" id="is-complete" checked>
+        {% else %}
+        <input type="checkbox" class="form-check-input" name="is_complete" id="is-complete">
+        {% endif %}
+    </div>
+    <button class="btn btn-outline-secondary" type="submit">Submit</button>
+    <button class="btn btn-outline-secondary" type="reset">Reset</button>
+    <a class="btn btn-outline-danger" type="button" href="{% url 'tasks:task_delete' task_data.pk %}">Delete</a>
+    <input type="text" value="{{task_data.text_input}}" name="original-text_input" hidden>
+    <input type="checkbox" value="{{task_data.is_complete}}" name="original-is_complete" hidden>
+    <input type="date" value="{task_data.due_date}}" name="original-due_date" hidden>
+</form>
+{% endblock %}
