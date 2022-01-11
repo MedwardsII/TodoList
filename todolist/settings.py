@@ -13,11 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import django_heroku
 import dj_database_url
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +25,7 @@ LOGIN_REDIRECT_URL = '/'
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--4@9_i(db_wzow&2f_8365=1hx=7ae5-_tl$3aa-^lu_033(i8'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -84,7 +80,9 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://postgres:password@localhost:5432/todolist'
+        default='postgres://postgres:password@localhost:5432/todolist',
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
@@ -132,5 +130,4 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 django_heroku.settings(locals())
