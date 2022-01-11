@@ -29,7 +29,7 @@ LOGIN_REDIRECT_URL = '/'
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY') or 'django-insecure--4@9_i(db_wzow&2f_8365=1hx=7ae5-_tl$3aa-^lu_033(i8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
