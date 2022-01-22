@@ -19,7 +19,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Login redirection
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/tasks'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -27,7 +27,7 @@ LOGIN_REDIRECT_URL = '/'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 
-SESSION_COOKIE_AGE = 600
+SESSION_COOKIE_AGE = 900
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -83,8 +83,7 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default='postgres://postgres:password@localhost:5432/todolist',
-        conn_max_age=600,
-        ssl_require=True
+        conn_max_age=600
     )
 }
 
